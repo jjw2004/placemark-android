@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Placemark">
         <activity
-            android:name=".PlacemarkActivity"
+            android:name=".models.PlacemarkModel"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
