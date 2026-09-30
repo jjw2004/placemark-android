@@ -1,31 +1,33 @@
-package ie.setu.placemark.models
+package ie.setu.placemark
 
 import java.util.concurrent.atomic.AtomicLong
 
-class PlacemarkMemStore : PlacemarkStore {
+class PlacedMarkList {
 
-    private val placemarks = ArrayList<PlacemarkModel>()
+    private val placemarks = ArrayList<PlacedMark>()
     private val lastId = AtomicLong(0L)
 
-    override fun findAll(): List<PlacemarkModel> {
+    fun findAll(): List<PlacedMark> {
         return placemarks.toList()   // return a copy so callers can't modify the store directly
     }
 
-    override fun findOne(id: Long): PlacemarkModel? {
+    fun findOne(id: Long): PlacedMark? {
         return placemarks.find { p -> p.id == id }
     }
 
-    override fun create(placemark: PlacemarkModel) {
+    fun create(placemark: PlacedMark) {
         placemark.id = lastId.incrementAndGet()
         placemarks.add(placemark)
     }
 
-    override fun update(placemark: PlacemarkModel): Boolean {
+    fun update(placemark: PlacedMark): Boolean {
         val foundIndex = placemarks.indexOfFirst { p -> p.id == placemark.id }
         return if (foundIndex != -1) {
             placemarks[foundIndex] = placemarks[foundIndex].copy(
                 title = placemark.title,
-                description = placemark.description
+                desc = placemark.desc,
+                x = placemark.x,
+                y = placemark.y
             )
             true
         } else {
@@ -33,7 +35,7 @@ class PlacemarkMemStore : PlacemarkStore {
         }
     }
 
-    override fun delete(id: Long): Boolean {
+    fun delete(id: Long): Boolean {
         return placemarks.removeIf { p -> p.id == id }
     }
 }
