@@ -37,7 +37,7 @@ class MarkListActivity : AppCompatActivity() {
             findViewById(R.id.marksRecyclerView)
 
         adapter = PlacedMarkAdapter(
-            marks = AppData.placedMarks.findAll(),
+            marks = AppData.placedMarkList.findAll(),
 
             listener = object : OnMarkListener {
 
@@ -70,7 +70,7 @@ class MarkListActivity : AppCompatActivity() {
         super.onResume()
 
         if (::adapter.isInitialized) {
-            val marks = AppData.placedMarks.findAll()
+            val marks = AppData.placedMarkList.findAll()
             Timber.d("Showing ${marks.size} marks")
             adapter.updateMarks(marks)
         }
@@ -104,10 +104,10 @@ class MarkListActivity : AppCompatActivity() {
 
     private fun deleteMark(mark: PlacedMarkData) {
 
-        AppData.placedMarks.delete(mark.id)
+        AppData.placedMarkList.delete(mark.id)
 
         adapter.updateMarks(
-            AppData.placedMarks.findAll()
+            AppData.placedMarkList.findAll()
         )
     }
 }
